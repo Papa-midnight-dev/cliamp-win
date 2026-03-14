@@ -224,6 +224,12 @@ type Model struct {
 	plMgrNewName     string
 	plMgrConfirmDel  bool
 
+	// Audio device picker overlay
+	showDevices   bool
+	deviceList    []player.AudioDevice
+	deviceCursor  int
+	deviceLoading bool
+
 	autoPlay bool // start playing immediately on launch
 
 	// Stream auto-reconnect state
@@ -360,7 +366,7 @@ func (m Model) ThemeName() string {
 // the main player view. When true, the visualizer is not visible and we can
 // use the slower tick rate.
 func (m *Model) isOverlayActive() bool {
-	return m.showKeymap || m.showThemes ||
+	return m.showKeymap || m.showThemes || m.showDevices ||
 		m.showFileBrowser || m.showNavBrowser || m.showPlManager ||
 		m.showQueue || m.showInfo || m.searching || m.netSearching ||
 		m.jumping || m.urlInputting
@@ -1074,6 +1080,28 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.provSignIn = false
 		m.provLoading = true
 		return m, fetchPlaylistsCmd(m.provider)
+
+	case devicesListedMsg:
+		m.deviceLoading = false
+		if msg.err != nil {
+			m.saveMsg = fmt.Sprintf("Device list failed: %s", msg.err)
+			m.saveMsgTTL = 60
+			m.showDevices = false
+		} else {
+			m.deviceList = msg.devices
+		}
+		return m, nil
+
+	case deviceSwitchedMsg:
+		if msg.err != nil {
+			m.saveMsg = fmt.Sprintf("Switch failed: %s", msg.err)
+		} else {
+			m.saveMsg = fmt.Sprintf("Audio output: %s", msg.name)
+			// Persist the selection to config.
+			_ = config.Save("audio_device", fmt.Sprintf("%q", msg.name))
+		}
+		m.saveMsgTTL = 80
+		return m, nil
 
 	case mpris.InitMsg:
 		m.mpris = msg.Svc

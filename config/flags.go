@@ -21,6 +21,7 @@ type Overrides struct {
 	ResampleQuality *int
 	BitDepth        *int
 	Play            *bool
+	AudioDevice     *string
 }
 
 // Apply merges non-nil overrides into cfg and clamps the result.
@@ -61,6 +62,9 @@ func (o Overrides) Apply(cfg *Config) {
 	if o.BitDepth != nil {
 		cfg.BitDepth = *o.BitDepth
 	}
+	if o.AudioDevice != nil {
+		cfg.AudioDevice = *o.AudioDevice
+	}
 	cfg.clamp()
 }
 
@@ -69,7 +73,19 @@ func (o Overrides) Apply(cfg *Config) {
 // and correctly treats negative numbers as flag values rather than flags.
 //
 // Returned action is one of "help", "version", "upgrade", or "" (run).
-func ParseFlags(args []string) (action string, ov Overrides, positional []string, err error) {
+func ParseFlags(rawArgs []string) (action string, ov Overrides, positional []string, err error) {
+	// Normalize --flag=value into --flag value so the parser handles both forms.
+	var args []string
+	for _, a := range rawArgs {
+		if strings.HasPrefix(a, "--") {
+			if eqIdx := strings.IndexByte(a, '='); eqIdx > 0 {
+				args = append(args, a[:eqIdx], a[eqIdx+1:])
+				continue
+			}
+		}
+		args = append(args, a)
+	}
+
 	i := 0
 	for i < len(args) {
 		arg := args[i]
@@ -173,6 +189,15 @@ func ParseFlags(args []string) (action string, ov Overrides, positional []string
 				return "", ov, nil, e
 			}
 			ov.BitDepth = &v
+		case "--audio-device":
+			v, e := requireNextString(args, &i, arg)
+			if e != nil {
+				return "", ov, nil, e
+			}
+			if strings.ToLower(v) == "list" {
+				return "list-audio-devices", ov, nil, nil
+			}
+			ov.AudioDevice = &v
 
 		default:
 			return "", ov, nil, fmt.Errorf("unknown flag: %s", arg)

@@ -36,6 +36,11 @@ func (m *Model) handleKey(msg tea.KeyMsg) tea.Cmd {
 		return m.handleKeymapKey(msg)
 	}
 
+	// Audio device picker overlay
+	if m.showDevices {
+		return m.handleDeviceKey(msg)
+	}
+
 	// Navidrome explore browser overlay
 	if m.showNavBrowser {
 		return m.handleNavBrowserKey(msg)
@@ -443,6 +448,12 @@ func (m *Model) handleKey(msg tea.KeyMsg) tea.Cmd {
 			}
 			m.adjustScroll()
 		}
+
+	case "d":
+		m.showDevices = true
+		m.deviceLoading = true
+		m.deviceCursor = 0
+		return listDevicesCmd()
 
 	case "ctrl+k":
 		m.showKeymap = true
@@ -1041,6 +1052,32 @@ func (m *Model) handleQueueKey(msg tea.KeyMsg) tea.Cmd {
 	return nil
 }
 
+// handleDeviceKey processes key presses while the audio device picker is open.
+func (m *Model) handleDeviceKey(msg tea.KeyMsg) tea.Cmd {
+	switch msg.String() {
+	case "ctrl+c":
+		m.showDevices = false
+		return m.quit()
+	case "up", "k":
+		if m.deviceCursor > 0 {
+			m.deviceCursor--
+		}
+	case "down", "j":
+		if m.deviceCursor < len(m.deviceList)-1 {
+			m.deviceCursor++
+		}
+	case "enter":
+		if len(m.deviceList) > 0 && m.deviceCursor < len(m.deviceList) {
+			dev := m.deviceList[m.deviceCursor]
+			m.showDevices = false
+			return switchDeviceCmd(dev.Name)
+		}
+	case "esc", "d":
+		m.showDevices = false
+	}
+	return nil
+}
+
 // keymapEntry is a key-action pair for the keymap overlay.
 type keymapEntry struct{ key, action string }
 
@@ -1076,6 +1113,7 @@ var keymapEntries = []keymapEntry{
 	{"f", "Find on YouTube (queue play next)"},
 	{"F", "Find on SoundCloud (queue play next)"},
 	{"u", "Load URL (stream/playlist)"},
+	{"d", "Audio device picker"},
 	{"y", "Show lyrics"},
 	{"Tab", "Toggle focus"},
 	{"Esc", "Back to provider"},

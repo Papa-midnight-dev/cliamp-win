@@ -122,6 +122,7 @@ type Config struct {
 	BufferMs        int                // speaker buffer in milliseconds (50–500)
 	ResampleQuality int                // beep resample quality factor (1–4)
 	BitDepth        int                // PCM bit depth for FFmpeg output: 16 or 32
+	AudioDevice     string             // preferred audio output device name (empty = system default)
 	Navidrome       NavidromeConfig    // optional Navidrome/Subsonic server credentials
 	Spotify         SpotifyConfig      // optional Spotify provider (requires Premium)
 	YouTubeMusic    YouTubeMusicConfig // optional YouTube Music provider
@@ -268,6 +269,8 @@ func Load() (Config, error) {
 				if v, err := strconv.Atoi(val); err == nil {
 					cfg.BitDepth = v
 				}
+			case "audio_device":
+				cfg.AudioDevice = strings.Trim(val, `"'`)
 			}
 		}
 	}
