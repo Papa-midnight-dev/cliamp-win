@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"cliamp/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
 
 	"google.golang.org/api/youtube/v3"
 )

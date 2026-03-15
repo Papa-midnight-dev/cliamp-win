@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"cliamp/internal/appdir"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/appdir"
 )
 
 // configPath returns the path to the config file.

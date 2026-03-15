@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"cliamp/internal/appdir"
-	"cliamp/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/appdir"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
 )
 
 // cacheTTL is how long cached playlist/track data is considered fresh.

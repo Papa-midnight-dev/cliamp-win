@@ -8,9 +8,9 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	"cliamp/player"
-	"cliamp/playlist"
-	"cliamp/resolve"
+	"github.com/Papa-midnight-dev/cliamp-win/player"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/resolve"
 )
 
 // fbEntry is a single item in the file browser listing.

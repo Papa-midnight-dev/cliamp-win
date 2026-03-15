@@ -13,8 +13,8 @@ import (
 	"sync"
 	"time"
 
-	"cliamp/config"
-	"cliamp/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/config"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
 )
 
 // httpClient is used for all Navidrome API calls with a finite timeout.

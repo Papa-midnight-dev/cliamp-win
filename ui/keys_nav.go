@@ -5,9 +5,9 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	"cliamp/config"
-	"cliamp/external/navidrome"
-	"cliamp/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/config"
+	"github.com/Papa-midnight-dev/cliamp-win/external/navidrome"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
 )
 
 // handleNavBrowserKey processes key presses while the Navidrome browser is open.

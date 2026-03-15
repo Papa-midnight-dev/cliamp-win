@@ -1,7 +1,5 @@
-//go:build !linux
-
-// Package mpris provides a stub implementation for non-Linux platforms
-// where D-Bus is not available.
+// Package mpris provides stub types for MPRIS media control integration.
+// On Windows, D-Bus is not available so all methods are no-ops.
 package mpris
 
 import "math"

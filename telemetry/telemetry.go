@@ -14,7 +14,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"cliamp/internal/appdir"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/appdir"
 )
 
 const endpoint = "https://telemetry.cliamp.stream/ping"

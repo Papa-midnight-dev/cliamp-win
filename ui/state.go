@@ -6,9 +6,9 @@ package ui
 import (
 	"time"
 
-	"cliamp/external/navidrome"
-	"cliamp/lyrics"
-	"cliamp/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/external/navidrome"
+	"github.com/Papa-midnight-dev/cliamp-win/lyrics"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
 )
 
 // searchState holds state for the playlist search overlay.

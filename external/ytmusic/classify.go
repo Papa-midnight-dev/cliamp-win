@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"cliamp/internal/appdir"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/appdir"
 
 	"google.golang.org/api/youtube/v3"
 )

@@ -1,97 +1,84 @@
 ```
- ██████ ██      ██  █████  ███    ███ ██████
-██      ██      ██ ██   ██ ████  ████ ██   ██
-██      ██      ██ ███████ ██ ████ ██ ██████
-██      ██      ██ ██   ██ ██  ██  ██ ██
- ██████ ███████ ██ ██   ██ ██      ██ ██
+ ██████ ██      ██  █████  ███    ███ ██████        ██     ██ ██ ███    ██
+██      ██      ██ ██   ██ ████  ████ ██   ██       ██     ██ ██ ████   ██
+██      ██      ██ ███████ ██ ████ ██ ██████  █████ ██  █  ██ ██ ██ ██  ██
+██      ██      ██ ██   ██ ██  ██  ██ ██             ██ ███ ██ ██ ██  ██ ██
+ ██████ ███████ ██ ██   ██ ██      ██ ██              ███ ███  ██ ██   ████
 ```
 
-A retro terminal music player inspired by Winamp. Play local files, streams, podcasts, YouTube, SoundCloud, Bilibili, Spotify, Xiaoyuzhou (小宇宙), and Navidrome with a spectrum visualizer, parametric EQ, and playlist management.
+A Windows-first fork of [cliamp](https://github.com/bjarneo/cliamp) — a retro terminal music player inspired by Winamp. Play local files, streams, YouTube, SoundCloud, and Navidrome with a spectrum visualizer, parametric EQ, and playlist management.
 
-Built with [Bubbletea](https://github.com/charmbracelet/bubbletea), [Lip Gloss](https://github.com/charmbracelet/lipgloss), [Beep](https://github.com/gopxl/beep), and [go-librespot](https://github.com/devgianlu/go-librespot).
+## What's Different
 
+This is a **deep fork** focused on Windows:
 
-https://github.com/user-attachments/assets/fbc33d20-e3ac-4a62-a991-8a2f0243c8ea
-
-
-## Radio
-
-Tune in to our radio channel:
-
-```sh
-cliamp https://radio.cliamp.stream/lofi/stream.pls
-```
-
-Add your own stations to `~/.config/cliamp/radios.toml`. See [docs/configuration.md](docs/configuration.md#custom-radio-stations).
-
-Want to host your own radio? Check out [cliamp-server](https://github.com/bjarneo/cliamp-server).
+- Native Windows paths (`%APPDATA%\cliamp-win\`)
+- Removed Linux-only code (MPRIS/D-Bus, PulseAudio, CoreAudio)
+- Removed Spotify (requires CGO/Linux libs)
+- No upstream telemetry
+- Bundled FFmpeg support (planned)
+- System tray, media controls, toast notifications (planned)
 
 ## Install
 
-```sh
-curl -fsSL https://raw.githubusercontent.com/bjarneo/cliamp/HEAD/install.sh | sh
+### Prerequisites
+
+- **Windows 10/11** with [Windows Terminal](https://aka.ms/terminal)
+- **yt-dlp** for YouTube/SoundCloud: `winget install yt-dlp`
+- **ffmpeg** for AAC/OPUS/WMA: `winget install Gyan.FFmpeg`
+
+### From Source
+
+```powershell
+# Requires Go 1.22+
+go install github.com/Papa-midnight-dev/cliamp-win@latest
+
+# Or build locally:
+git clone https://github.com/Papa-midnight-dev/cliamp-win
+cd cliamp-win
+go build -o cliamp-win.exe .
 ```
 
-**Homebrew**
+## Usage
 
-```sh
-brew install bjarneo/cliamp/cliamp
+```powershell
+# Play local files
+cliamp-win track.mp3 C:\Users\You\Music
+
+# Play with options
+cliamp-win --shuffle --auto-play C:\Users\You\Music
+
+# Stream radio (default)
+cliamp-win
+
+# YouTube search
+cliamp-win search "never gonna give you up"
+
+# SoundCloud search
+cliamp-win search-sc "lofi beats"
+
+# HTTP stream
+cliamp-win https://example.com/stream.m3u
 ```
 
-**Arch Linux (AUR)**
+## Supported Formats
 
-```sh
-yay -S cliamp
-```
+| Format | Status |
+|--------|--------|
+| MP3, WAV, FLAC, OGG | Built-in |
+| AAC, OPUS, WMA, WebM | Requires ffmpeg |
+| YouTube, SoundCloud, Bandcamp | Requires yt-dlp |
 
-**Pre-built binaries**
+## Config
 
-Download from [GitHub Releases](https://github.com/bjarneo/cliamp/releases/latest).
+Configuration is stored in `%APPDATA%\cliamp-win\config.toml`.
 
-**Build from source**
+See `config.toml.example` for all options.
 
-```sh
-git clone https://github.com/bjarneo/cliamp.git && cd cliamp && go build -o cliamp .
-```
+## Credits
 
-## Quick Start
+Forked from [bjarneo/cliamp](https://github.com/bjarneo/cliamp) — all credit for the original player goes to the upstream maintainers.
 
-```sh
-cliamp ~/Music                     # play a directory
-cliamp *.mp3 *.flac               # play files
-cliamp https://example.com/stream  # play a URL
-```
+## License
 
-Press `Ctrl+K` to see all keybindings.
-
-## Docs
-
-- [Configuration](docs/configuration.md)
-- [Keybindings](docs/keybindings.md)
-- [CLI Flags](docs/cli.md)
-- [Streaming](docs/streaming.md)
-- [Playlists](docs/playlists.md)
-- [YouTube, SoundCloud, Bandcamp and Bilibili](docs/yt-dlp.md)
-- [Lyrics](docs/lyrics.md)
-- [Spotify](docs/spotify.md)
-- [Navidrome](docs/navidrome.md)
-- [Themes](docs/themes.md)
-- [Audio Quality](docs/audio-quality.md)
-- [MPRIS](docs/mpris.md)
-- [Telemetry](docs/telemetry.md)
-
-## Omarchy
-
-Add this keybind to launch cliamp with `Super+Shift+M`:
-
-```
-bindd = SUPER SHIFT, M, Music, exec, omarchy-launch-tui cliamp
-```
-
-## Author
-
-[x.com/iamdothash](https://x.com/iamdothash)
-
-## Disclaimer
-
-Use this software at your own risk. We are not responsible for any damages or issues that may arise from using this software.
+MIT — see [LICENSE](LICENSE).

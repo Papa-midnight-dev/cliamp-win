@@ -5,11 +5,11 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	"cliamp/external/navidrome"
-	"cliamp/lyrics"
-	"cliamp/player"
-	"cliamp/playlist"
-	"cliamp/resolve"
+	"github.com/Papa-midnight-dev/cliamp-win/external/navidrome"
+	"github.com/Papa-midnight-dev/cliamp-win/lyrics"
+	"github.com/Papa-midnight-dev/cliamp-win/player"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/resolve"
 )
 
 // — Message types used by tea.Cmd constructors —

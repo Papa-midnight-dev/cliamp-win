@@ -41,7 +41,7 @@ func newNavBuffer(rawURL string) (*navBuffer, int64, error) {
 		cancel()
 		return nil, 0, fmt.Errorf("nav buffer request: %w", err)
 	}
-	req.Header.Set("User-Agent", "cliamp/1.0 (https://github.com/bjarneo/cliamp)")
+	req.Header.Set("User-Agent", "github.com/Papa-midnight-dev/cliamp-win/1.0 (https://github.com/bjarneo/cliamp)")
 
 	resp, err := httpClient.Do(req)
 	if err != nil {

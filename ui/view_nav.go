@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"cliamp/external/navidrome"
+	"github.com/Papa-midnight-dev/cliamp-win/external/navidrome"
 )
 
 // — Navidrome browser renderers —

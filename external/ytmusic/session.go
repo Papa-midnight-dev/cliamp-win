@@ -11,8 +11,8 @@ import (
 	"path/filepath"
 	"sync"
 
-	"cliamp/internal/appdir"
-	"cliamp/internal/browser"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/appdir"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/browser"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"

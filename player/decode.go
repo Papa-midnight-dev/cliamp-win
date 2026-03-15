@@ -16,7 +16,7 @@ import (
 	"github.com/gopxl/beep/v2/vorbis"
 	"github.com/gopxl/beep/v2/wav"
 
-	"cliamp/internal/httpclient"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/httpclient"
 )
 
 // SupportedExts is the set of file extensions the player can decode.
@@ -69,7 +69,7 @@ func openSourceAt(path string, byteOffset int64, onMeta func(string)) (sourceRes
 	if err != nil {
 		return sourceResult{}, fmt.Errorf("http request: %w", err)
 	}
-	req.Header.Set("User-Agent", "cliamp/1.0 (https://github.com/bjarneo/cliamp)")
+	req.Header.Set("User-Agent", "github.com/Papa-midnight-dev/cliamp-win/1.0 (https://github.com/bjarneo/cliamp)")
 	// Request ICY metadata — servers that don't support it simply ignore this header.
 	req.Header.Set("Icy-MetaData", "1")
 	if byteOffset > 0 {

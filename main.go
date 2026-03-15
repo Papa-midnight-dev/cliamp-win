@@ -1,4 +1,4 @@
-// Package main is the entry point for the CLIAMP terminal music player.
+// Package main is the entry point for the cliamp-win terminal music player.
 package main
 
 import (
@@ -8,20 +8,18 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	"cliamp/config"
-	"cliamp/external/local"
-	"cliamp/external/navidrome"
-	"cliamp/external/radio"
-	"cliamp/external/spotify"
-	"cliamp/external/ytmusic"
-	"cliamp/mpris"
-	"cliamp/player"
-	"cliamp/playlist"
-	"cliamp/resolve"
-	"cliamp/telemetry"
-	"cliamp/theme"
-	"cliamp/ui"
-	"cliamp/upgrade"
+	"github.com/Papa-midnight-dev/cliamp-win/config"
+	"github.com/Papa-midnight-dev/cliamp-win/external/local"
+	"github.com/Papa-midnight-dev/cliamp-win/external/navidrome"
+	"github.com/Papa-midnight-dev/cliamp-win/external/radio"
+	"github.com/Papa-midnight-dev/cliamp-win/external/ytmusic"
+	"github.com/Papa-midnight-dev/cliamp-win/mpris"
+	"github.com/Papa-midnight-dev/cliamp-win/player"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/resolve"
+	"github.com/Papa-midnight-dev/cliamp-win/theme"
+	"github.com/Papa-midnight-dev/cliamp-win/ui"
+	"github.com/Papa-midnight-dev/cliamp-win/upgrade"
 )
 
 // version is set at build time via -ldflags "-X main.version=vX.Y.Z".
@@ -47,12 +45,6 @@ func run(overrides config.Overrides, positional []string) error {
 	}
 	if navClient != nil {
 		providers = append(providers, ui.ProviderEntry{Key: "navidrome", Name: "Navidrome", Provider: navClient})
-	}
-
-	var spotifyProv *spotify.SpotifyProvider
-	if cfg.Spotify.IsSet() {
-		spotifyProv = spotify.New(nil, cfg.Spotify.ClientID)
-		providers = append(providers, ui.ProviderEntry{Key: "spotify", Name: "Spotify", Provider: spotifyProv})
 	}
 
 	var ytProviders ytmusic.Providers
@@ -104,9 +96,6 @@ func run(overrides config.Overrides, positional []string) error {
 	localProv := local.New()
 
 	defer resolve.CleanupYTDL()
-	if spotifyProv != nil {
-		defer spotifyProv.Close()
-	}
 	if ytProviders.Music != nil {
 		defer ytProviders.Music.Close()
 	}
@@ -165,12 +154,6 @@ func run(overrides config.Overrides, positional []string) error {
 	}
 	defer p.Close()
 
-	// Register Spotify streamer factory so spotify: URIs are decoded
-	// through go-librespot instead of the normal file/HTTP pipeline.
-	if spotifyProv != nil {
-		p.SetStreamerFactory(spotifyProv.NewStreamer)
-	}
-
 	cfg.ApplyPlayer(p)
 	cfg.ApplyPlaylist(pl)
 
@@ -219,9 +202,9 @@ func run(overrides config.Overrides, positional []string) error {
 	return nil
 }
 
-const helpText = `cliamp — retro terminal music player
+const helpText = `cliamp-win — Windows-first retro terminal music player
 
-Usage: cliamp [flags] <file|folder|url> [...]
+Usage: cliamp-win [flags] <file|folder|url> [...]
 
 Playback:
   --volume <dB>           Volume in dB, range [-30, +6] (e.g. --volume -5)
@@ -237,7 +220,7 @@ Audio engine:
   --bit-depth <n>         PCM bit depth: 16 (default) or 32 (lossless)
 
 Provider:
-  --provider <name>       Default provider: radio, navidrome, spotify, yt, youtube, ytmusic (default: radio)
+  --provider <name>       Default provider: radio, navidrome, yt, youtube, ytmusic (default: radio)
 
 Appearance:
   --theme <name>          UI theme name
@@ -247,27 +230,27 @@ Appearance:
 General:
   -h, --help              Show this help message
   -v, --version           Show the current version
-  --upgrade               Upgrade cliamp to the latest release
+  --upgrade               Upgrade to the latest release
 
 Examples:
-  cliamp track.mp3 song.flac ~/Music
-  cliamp --shuffle --volume -5 track.mp3
-  cliamp track.mp3 --repeat all --mono
-  cliamp --auto-play --shuffle ~/Music
-  cliamp --eq-preset "Bass Boost" ~/Music
-  cliamp https://example.com/song.mp3
-  cliamp http://radio.example.com/stream.m3u
-  cliamp search "rick astley"            # search YouTube
-  cliamp search-sc "lofi beats"            # search SoundCloud
-  cliamp https://soundcloud.com/user/sets/playlist
-  cliamp https://www.youtube.com/watch?v=...
+  cliamp-win track.mp3 song.flac C:\Users\You\Music
+  cliamp-win --shuffle --volume -5 track.mp3
+  cliamp-win track.mp3 --repeat all --mono
+  cliamp-win --auto-play --shuffle C:\Users\You\Music
+  cliamp-win --eq-preset "Bass Boost" C:\Users\You\Music
+  cliamp-win https://example.com/song.mp3
+  cliamp-win http://radio.example.com/stream.m3u
+  cliamp-win search "rick astley"            # search YouTube
+  cliamp-win search-sc "lofi beats"          # search SoundCloud
+  cliamp-win https://soundcloud.com/user/sets/playlist
+  cliamp-win https://www.youtube.com/watch?v=...
 
 Environment:
   NAVIDROME_URL, NAVIDROME_USER, NAVIDROME_PASS   Navidrome server (env fallback)
 
-Config:    ~/.config/cliamp/config.toml  (see config.toml.example)
-Radios:    ~/.config/cliamp/radios.toml
-Playlists: ~/.config/cliamp/playlists/*.toml
+Config:    %APPDATA%\cliamp-win\config.toml  (see config.toml.example)
+Radios:    %APPDATA%\cliamp-win\radios.toml
+Playlists: %APPDATA%\cliamp-win\playlists\*.toml
 Formats:   mp3, wav, flac, ogg, m4a, aac, opus, wma (aac/opus/wma need ffmpeg)
 SoundCloud/YouTube/Bandcamp require yt-dlp`
 
@@ -284,9 +267,9 @@ func main() {
 		return
 	case "version":
 		if version == "" {
-			fmt.Println("cliamp (dev build)")
+			fmt.Println("cliamp-win (dev build)")
 		} else {
-			fmt.Printf("cliamp %s\n", version)
+			fmt.Printf("cliamp-win %s\n", version)
 		}
 		return
 	case "upgrade":
@@ -296,8 +279,6 @@ func main() {
 		}
 		return
 	}
-
-	telemetry.Ping(version)
 
 	if err := run(overrides, positional); err != nil {
 		fmt.Fprintln(os.Stderr, err)

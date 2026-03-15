@@ -20,8 +20,8 @@ import (
 	"sync"
 	"time"
 
-	"cliamp/player"
-	"cliamp/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/player"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
 
 	"github.com/kkdai/youtube/v2"
 )
@@ -38,7 +38,7 @@ type uaTransport struct{ rt http.RoundTripper }
 
 func (t *uaTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	req = req.Clone(req.Context())
-	req.Header.Set("User-Agent", "cliamp/1.0 (https://github.com/bjarneo/cliamp)")
+	req.Header.Set("User-Agent", "github.com/Papa-midnight-dev/cliamp-win/1.0 (https://github.com/bjarneo/cliamp)")
 	return t.rt.RoundTrip(req)
 }
 

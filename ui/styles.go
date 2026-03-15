@@ -1,7 +1,7 @@
 package ui
 
 import (
-	"cliamp/theme"
+	"github.com/Papa-midnight-dev/cliamp-win/theme"
 
 	"github.com/charmbracelet/lipgloss"
 )

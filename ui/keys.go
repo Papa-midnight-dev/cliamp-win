@@ -10,9 +10,9 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"cliamp/config"
-	"cliamp/internal/fileutil"
-	"cliamp/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/config"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/fileutil"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
 )
 
 // quit shuts down the player and signals the TUI to exit.

@@ -10,13 +10,13 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"cliamp/config"
-	"cliamp/external/local"
-	"cliamp/external/navidrome"
-	"cliamp/mpris"
-	"cliamp/player"
-	"cliamp/playlist"
-	"cliamp/theme"
+	"github.com/Papa-midnight-dev/cliamp-win/config"
+	"github.com/Papa-midnight-dev/cliamp-win/external/local"
+	"github.com/Papa-midnight-dev/cliamp-win/external/navidrome"
+	"github.com/Papa-midnight-dev/cliamp-win/mpris"
+	"github.com/Papa-midnight-dev/cliamp-win/player"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/theme"
 )
 
 type focusArea int

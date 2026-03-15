@@ -7,7 +7,7 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 
-	"cliamp/theme"
+	"github.com/Papa-midnight-dev/cliamp-win/theme"
 )
 
 // Pre-built styles for elements created per-render to avoid repeated allocation.

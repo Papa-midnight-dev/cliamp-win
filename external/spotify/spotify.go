@@ -1,8 +1,6 @@
-//go:build windows
-
-// stub_windows.go provides a no-op Spotify implementation on Windows
-// where go-librespot (CGO: FLAC, Vorbis, ALSA) cannot compile.
-
+// Package spotify provides a stub Spotify implementation.
+// go-librespot requires CGO (FLAC, Vorbis, ALSA) which is not available
+// in the Windows-only cliamp-win fork.
 package spotify
 
 import (
@@ -11,7 +9,7 @@ import (
 
 	"github.com/gopxl/beep/v2"
 
-	"cliamp/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
 )
 
 var errSpotifyUnavailable = errors.New("spotify: unavailable on Windows (go-librespot requires CGO)")

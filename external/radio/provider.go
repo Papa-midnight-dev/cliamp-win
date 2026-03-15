@@ -11,9 +11,9 @@ import (
 	"strconv"
 	"strings"
 
-	"cliamp/internal/appdir"
-	"cliamp/internal/tomlutil"
-	"cliamp/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/appdir"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/tomlutil"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
 )
 
 const builtinLofiName = "cliamp radio"

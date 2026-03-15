@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"strings"
 
-	"cliamp/resolve"
+	"github.com/Papa-midnight-dev/cliamp-win/resolve"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

@@ -11,7 +11,7 @@ import (
 	"slices"
 	"strings"
 
-	"cliamp/internal/appdir"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/appdir"
 )
 
 //go:embed themes/*.toml

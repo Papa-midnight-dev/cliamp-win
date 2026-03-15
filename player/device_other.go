@@ -1,6 +1,4 @@
-// player/device_other.go — stub for non-macOS platforms.
-
-//go:build !darwin || ios
+// player/device_other.go — sample rate detection stub.
 
 package player
 

@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"cliamp/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
 )
 
 // m3uEntry holds a single parsed M3U entry with optional EXTINF metadata.

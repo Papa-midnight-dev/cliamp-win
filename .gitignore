@@ -1,4 +1,6 @@
 cliamp
+cliamp-win.exe
+*.exe
 mp3/
 navdata/
 plans/

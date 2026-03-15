@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	"cliamp/lyrics"
-	"cliamp/theme"
+	"github.com/Papa-midnight-dev/cliamp-win/lyrics"
+	"github.com/Papa-midnight-dev/cliamp-win/theme"
 )
 
 func (m Model) renderKeymapOverlay() string {

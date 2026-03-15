@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"cliamp/playlist"
+	"github.com/Papa-midnight-dev/cliamp-win/playlist"
 )
 
 var (
