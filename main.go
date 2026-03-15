@@ -14,6 +14,7 @@ import (
 	"github.com/Papa-midnight-dev/cliamp-win/external/radio"
 	"github.com/Papa-midnight-dev/cliamp-win/external/ytmusic"
 	"github.com/Papa-midnight-dev/cliamp-win/internal/ffmpeg"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/tray"
 	"github.com/Papa-midnight-dev/cliamp-win/mpris"
 	"github.com/Papa-midnight-dev/cliamp-win/player"
 	"github.com/Papa-midnight-dev/cliamp-win/playlist"
@@ -194,6 +195,15 @@ func run(overrides config.Overrides, positional []string) error {
 		defer svc.Close()
 		go prog.Send(mpris.InitMsg{Svc: svc})
 	}
+
+	// Start system tray in background.
+	go tray.Run(tray.Callbacks{
+		OnPlayPause: func() { prog.Send(mpris.PlayPauseMsg{}) },
+		OnNext:      func() { prog.Send(mpris.NextMsg{}) },
+		OnPrev:      func() { prog.Send(mpris.PrevMsg{}) },
+		OnQuit:      func() { prog.Send(mpris.QuitMsg{}) },
+	})
+	defer tray.Quit()
 
 	finalModel, err := prog.Run()
 	if err != nil {
