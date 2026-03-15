@@ -13,6 +13,7 @@ import (
 	"github.com/Papa-midnight-dev/cliamp-win/external/navidrome"
 	"github.com/Papa-midnight-dev/cliamp-win/external/radio"
 	"github.com/Papa-midnight-dev/cliamp-win/external/ytmusic"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/ffmpeg"
 	"github.com/Papa-midnight-dev/cliamp-win/mpris"
 	"github.com/Papa-midnight-dev/cliamp-win/player"
 	"github.com/Papa-midnight-dev/cliamp-win/playlist"
@@ -26,6 +27,15 @@ import (
 var version string
 
 func run(overrides config.Overrides, positional []string) error {
+	// Check FFmpeg availability early; add app-local bin to PATH if needed.
+	switch ffmpeg.Check() {
+	case ffmpeg.FoundLocal:
+		fmt.Fprintf(os.Stderr, "Using app-local ffmpeg.\n")
+	case ffmpeg.NotFound:
+		fmt.Fprintf(os.Stderr, "Note: ffmpeg not found — some formats (AAC, OPUS, WMA) won't play.\n")
+		fmt.Fprintf(os.Stderr, "Install: %s\n\n", ffmpeg.InstallHint())
+	}
+
 	cfg, err := config.Load()
 	if err != nil {
 		return fmt.Errorf("config: %w", err)

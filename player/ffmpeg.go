@@ -67,7 +67,7 @@ func streamFromReader(reader *bufio.Reader, samples [][2]float64, buf []byte, f3
 func decodeFFmpeg(path string, sr beep.SampleRate, bitDepth int) (beep.StreamSeekCloser, beep.Format, error) {
 	if _, err := exec.LookPath("ffmpeg"); err != nil {
 		ext := filepath.Ext(path)
-		return nil, beep.Format{}, fmt.Errorf("ffmpeg is required to play %s files — install it with your package manager", ext)
+		return nil, beep.Format{}, fmt.Errorf("ffmpeg is required to play %s files — install: winget install Gyan.FFmpeg", ext)
 	}
 
 	pcmFmt, codec, precision := ffmpegPCMArgs(bitDepth)
@@ -152,7 +152,7 @@ func (p *pcmStreamer) Close() error {
 func decodeFFmpegStream(path string, sr beep.SampleRate, bitDepth int) (*ffmpegPipeStreamer, beep.Format, error) {
 	if _, err := exec.LookPath("ffmpeg"); err != nil {
 		ext := filepath.Ext(path)
-		return nil, beep.Format{}, fmt.Errorf("ffmpeg is required to play %s files — install it with your package manager", ext)
+		return nil, beep.Format{}, fmt.Errorf("ffmpeg is required to play %s files — install: winget install Gyan.FFmpeg", ext)
 	}
 
 	pcmFmt, codec, precision := ffmpegPCMArgs(bitDepth)
@@ -224,7 +224,7 @@ func (f *ffmpegPipeStreamer) Close() error {
 func decodeFFmpegLocal(path string, sr beep.SampleRate, bitDepth int) (*localFFmpegStreamer, beep.Format, error) {
 	if _, err := exec.LookPath("ffmpeg"); err != nil {
 		ext := filepath.Ext(path)
-		return nil, beep.Format{}, fmt.Errorf("ffmpeg is required to play %s files — install it with your package manager", ext)
+		return nil, beep.Format{}, fmt.Errorf("ffmpeg is required to play %s files — install: winget install Gyan.FFmpeg", ext)
 	}
 
 	_, _, precision := ffmpegPCMArgs(bitDepth)
@@ -345,7 +345,7 @@ func (s *localFFmpegStreamer) Close() error {
 // the new position — no HTTP reconnect required.
 func decodeNavFFmpeg(nb *navBuffer, sr beep.SampleRate, bitDepth int, totalFrames int) (*navFFmpegStreamer, beep.Format, error) {
 	if _, err := exec.LookPath("ffmpeg"); err != nil {
-		return nil, beep.Format{}, fmt.Errorf("ffmpeg is required to decode this format — install it with your package manager")
+		return nil, beep.Format{}, fmt.Errorf("ffmpeg is required to decode this format — install: winget install Gyan.FFmpeg")
 	}
 	_, _, precision := ffmpegPCMArgs(bitDepth)
 	s := &navFFmpegStreamer{nb: nb, sr: sr, total: totalFrames, f32: bitDepth == 32}
