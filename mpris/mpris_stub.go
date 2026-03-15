@@ -1,10 +1,11 @@
 // Package mpris provides stub types for MPRIS media control integration.
 // On Windows, D-Bus is not available so all methods are no-ops.
+// Future milestones will replace this with Windows SMTC integration.
 package mpris
 
 import "math"
 
-// Message types (must match the Linux implementation).
+// Message types used by the UI event loop.
 type (
 	PlayPauseMsg   struct{}
 	NextMsg        struct{}
@@ -28,20 +29,19 @@ type TrackInfo struct {
 	Length      int64 // microseconds
 }
 
-// Service is a no-op stub on non-Linux platforms.
+// Service is a no-op stub (SMTC integration planned for M3).
 type Service struct{}
 
-// New returns nil on non-Linux platforms (no D-Bus available).
+// New returns nil — media transport controls are not yet implemented.
 func New(send func(interface{})) (*Service, error) {
 	return nil, nil
 }
 
-// Update is a no-op on non-Linux platforms.
+// Update is a no-op.
 func (s *Service) Update(status string, track TrackInfo, volumeDB float64, positionUs int64, canSeek bool) {
 }
 
 // LinearToDb converts a 0.0–1.0 linear volume to dB (range [-30, +6]).
-// This must match the Linux implementation in mpris.go.
 func LinearToDb(v float64) float64 {
 	if v <= 0 {
 		return -30
@@ -56,8 +56,8 @@ func LinearToDb(v float64) float64 {
 	return db
 }
 
-// EmitSeeked is a no-op on non-Linux platforms.
+// EmitSeeked is a no-op.
 func (s *Service) EmitSeeked(positionUs int64) {}
 
-// Close is a no-op on non-Linux platforms.
+// Close is a no-op.
 func (s *Service) Close() {}

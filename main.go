@@ -32,7 +32,7 @@ func run(overrides config.Overrides, positional []string) error {
 	}
 	overrides.Apply(&cfg)
 
-	// Build provider list: Radio is always available, Navidrome and Spotify if configured.
+	// Build provider list: Radio is always available, Navidrome if configured.
 	radioProv := radio.New()
 	var providers []ui.ProviderEntry
 	providers = append(providers, ui.ProviderEntry{Key: "radio", Name: "Radio", Provider: radioProv})
@@ -102,7 +102,7 @@ func run(overrides config.Overrides, positional []string) error {
 
 	if len(positional) > 0 && (positional[0] == "search" || positional[0] == "search-sc") {
 		if len(positional) == 1 {
-			return fmt.Errorf("search requires a query string (e.g. cliamp search \"never gonna give you up\")")
+			return fmt.Errorf("search requires a query string (e.g. cliamp-win search \"never gonna give you up\")")
 		}
 		prefix := "ytsearch1:"
 		if positional[0] == "search-sc" {
