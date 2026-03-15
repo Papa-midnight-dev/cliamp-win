@@ -9,9 +9,11 @@ import (
 )
 
 func TestLoadSeekLargeStepSec(t *testing.T) {
-	t.Setenv("HOME", t.TempDir())
+	tmp := t.TempDir()
+	t.Setenv("HOME", tmp)
+	t.Setenv("APPDATA", tmp)
 
-	path := filepath.Join(os.Getenv("HOME"), ".config", "cliamp", "config.toml")
+	path := filepath.Join(tmp, "cliamp-win", "config.toml")
 	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
 		t.Fatalf("MkdirAll: %v", err)
 	}
@@ -41,9 +43,11 @@ func TestLoadSeekLargeStepSecClamp(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			t.Setenv("HOME", t.TempDir())
+			tmp := t.TempDir()
+			t.Setenv("HOME", tmp)
+			t.Setenv("APPDATA", tmp)
 
-			path := filepath.Join(os.Getenv("HOME"), ".config", "cliamp", "config.toml")
+			path := filepath.Join(tmp, "cliamp-win", "config.toml")
 			if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
 				t.Fatalf("MkdirAll: %v", err)
 			}
