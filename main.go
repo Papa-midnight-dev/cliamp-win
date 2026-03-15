@@ -15,6 +15,7 @@ import (
 	"github.com/Papa-midnight-dev/cliamp-win/external/ytmusic"
 	"github.com/Papa-midnight-dev/cliamp-win/internal/ffmpeg"
 	"github.com/Papa-midnight-dev/cliamp-win/internal/tray"
+	"github.com/Papa-midnight-dev/cliamp-win/internal/winterm"
 	"github.com/Papa-midnight-dev/cliamp-win/mpris"
 	"github.com/Papa-midnight-dev/cliamp-win/player"
 	"github.com/Papa-midnight-dev/cliamp-win/playlist"
@@ -275,6 +276,9 @@ Formats:   mp3, wav, flac, ogg, m4a, aac, opus, wma (aac/opus/wma need ffmpeg)
 SoundCloud/YouTube/Bandcamp require yt-dlp`
 
 func main() {
+	// Enable VT processing for ANSI colors in cmd.exe and PowerShell 5.
+	winterm.EnableVT()
+
 	action, overrides, positional, err := config.ParseFlags(os.Args[1:])
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
