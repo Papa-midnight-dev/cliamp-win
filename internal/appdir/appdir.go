@@ -6,15 +6,12 @@ import (
 )
 
 // Dir returns the cliamp-win configuration directory.
-// On Windows this is %APPDATA%\cliamp-win. Falls back to ~/.config/cliamp-win
-// if APPDATA is not set.
+// Uses os.UserConfigDir() which returns %APPDATA% on Windows,
+// $XDG_CONFIG_HOME or ~/.config on Linux/macOS.
 func Dir() (string, error) {
-	if appData := os.Getenv("APPDATA"); appData != "" {
-		return filepath.Join(appData, "cliamp-win"), nil
-	}
-	home, err := os.UserHomeDir()
+	configDir, err := os.UserConfigDir()
 	if err != nil {
 		return "", err
 	}
-	return filepath.Join(home, ".config", "cliamp-win"), nil
+	return filepath.Join(configDir, "cliamp-win"), nil
 }
